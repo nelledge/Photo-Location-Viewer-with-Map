@@ -23,19 +23,8 @@ def get_basic_metadata(image_path):
 # function to extract EXIF metadata from an image
 def get_exif_metadata(image_path):
     #open image in binary mode
-    with open(image_path, 'rb') as img_file:
+    with open(image_path, 'rb') as img_file: #rb = open it in binarry mode 
         tags = exifread.process_file(img_file)
-
-        print("[EXIF Metadata]")
-        exif_keys = [
-            "Image Make", "Image Model", "Image DateTime", 
-            "EXIF FNumber", "EXIF ExposureTime", "EXIF ISOSpeedRatings", 
-            "EXIF FocalLength", "EXIF LensModel"
-        ]
-        # loop through the keys and print the corresponding values
-        for tag in exif_keys:
-            if tag in tags:
-                print(f"{tag}: {tags[tag]}")
         
         # extract GPS information if available
         print("\n[GPS Information]")
@@ -62,19 +51,10 @@ def get_exif_metadata(image_path):
             print("No GPS data available.")
 
 if __name__ == "__main__":
-    #prompt the user to enter the image path
-    # image_path = input("Enter the path to the image: ")
-    image_path = ("monster.JPEG")
 
-    try:
-        #extract basic metadata
-        print("[+] Extracting basic metadata...")
-        get_basic_metadata(image_path)
+    pictures = ["monster.JPEG"]
+    image_path = ("")
 
-        print("\n[+] Extracting EXIF metadata...")
-        get_exif_metadata(image_path)
-
-    # handle the exception if the image path is invalid
-    except FileNotFoundError:
-        print("[-] Error: The specified file was not found.")
-        
+    print("\n[+] Extracting EXIF rest metadata...")
+    get_exif_metadata(image_path)
+     
