@@ -1,5 +1,6 @@
 from PIL import Image
 import exifread
+from pathlib import Path
 
 #convert GPS coordinates to decimal
 def convert_to_degrees(value):
@@ -11,15 +12,6 @@ def convert_to_degrees(value):
     # Calculate the decimal degrees
     return d + (m / 60.0) + (s / 3600.0)
 
-# basic function to extract metadata from an image
-def get_basic_metadata(image_path):
-    #open image using pillow
-    with Image.open(image_path) as img:
-        print(f"\n[Basic Image Information]")
-        print(f"Image Format: {img.format}")
-        print(f"Image Size: {img.size} pixels")
-        print(f"Image Mode: {img.mode}\n")
-
 # function to extract EXIF metadata from an image
 def get_exif_metadata(image_path):
     #open image in binary mode
@@ -27,7 +19,7 @@ def get_exif_metadata(image_path):
         tags = exifread.process_file(img_file)
         
         # extract GPS information if available
-        print("\n[GPS Information]")
+        # print("\n[GPS Information]")
         gps_latitude = tags.get("GPS GPSLatitude")
         gps_latitude_ref = tags.get("GPS GPSLatitudeRef")
         gps_longitude = tags.get("GPS GPSLongitude")
@@ -52,9 +44,12 @@ def get_exif_metadata(image_path):
 
 if __name__ == "__main__":
 
-    pictures = ["monster.JPEG"]
-    image_path = ("")
+    pictures = ["monster.JPEG", "park.JPEG"]
+    pictures_folder = Path("pictures")
 
-    print("\n[+] Extracting EXIF rest metadata...")
-    get_exif_metadata(image_path)
-     
+    for i in pictures: 
+        print(f"Picture ({i}): \n")
+        get_exif_metadata(pictures_folder/i)
+        print("")
+        print("")
+        
